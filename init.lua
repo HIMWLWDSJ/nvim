@@ -1,5 +1,4 @@
 require('plugins')
-require('loader')
 require('keybind')
 vim.g.clipboard = unnamedplus
 vim.g.encoding = "UTF-8"
