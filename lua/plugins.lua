@@ -79,7 +79,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 }) 
   end},
-  {"nvim-treesitter/nvim-treesitter", build = ":TSUpdate", event = "VeryLazy", 
+  {"nvim-treesitter/nvim-treesitter", build = ":TSUpdate", event = "BufEnter *.*", 
     config = function() 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 --code highlight
@@ -301,7 +301,7 @@ cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done { map_char = { tex = 
       }    end,
       event = "VimEnter",
   },
-  {'numToStr/Comment.nvim',event = "InsertEnter", config = function()
+  {'numToStr/Comment.nvim',event = "BufEnter *.*", config = function()
     require('Comment').setup({
     ---Add a space b/w comment and the line
     padding = true,
@@ -329,7 +329,7 @@ cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done { map_char = { tex = 
 })
 
   end},
-  { "lukas-reineke/indent-blankline.nvim" , event="VeryLazy", config = function() 
+  { "lukas-reineke/indent-blankline.nvim" , event="BufEnter *.*", config = function() 
   vim.opt.termguicolors = true
   vim.cmd [[highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine]]
   vim.cmd [[highlight IndentBlanklineIndent2 guifg=#E5C07B gui=nocombine]]
