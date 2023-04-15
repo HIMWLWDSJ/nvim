@@ -2,10 +2,10 @@ vim.g.mapleader= ' '
 vim.g.localleader= ' '
 local bind = vim.api.nvim_set_keymap
 local opt = {noremap = true,  silent = true}
-bind('n', '<leader>e', ':NvimTreeFindFileToggle<CR>', opt)   
 bind('n', '<leader>c', ':NvimTreeClose<CR>:NvimTreeOpen ~/.config/nvim<CR>', opt)   
 bind('n', '<C-l>', ':w<CR>:! m && ./out<CR>', opt)   
 bind('n', '<M-i>', 'ggo#include <', opt)   
+bind('n', '<S-tab>', ':NvimTreeFindFileToggle<CR>', opt)   
 bind('n', ';', 'A;<CR>', opt) 
 bind('n', 'e', 'lbvec', opt)  
 bind('n', 'w', 'lbve', opt)  
