@@ -1,4 +1,5 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+local s = "https://kgithub.com/"
 if not vim.loop.fs_stat(lazypath) then
   -- bootstrap lazy.nvim
   -- stylua: ignore
@@ -6,17 +7,17 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 require("lazy").setup({
-  {"catppuccin/nvim", lazy = false, priority = 1000, config = function() 
+  {s.."catppuccin/nvim", lazy = false, priority = 1000, config = function()
     require("catppuccin").setup{
     transparent_background = true
   }
   vim.cmd.colorscheme "catppuccin-macchiato"
   end
 }, --Theme
-  {"nvim-tree/nvim-tree.lua",dependencies = {
-      "nvim-tree/nvim-web-devicons",
+  {s.."nvim-tree/nvim-tree.lua",dependencies = {
+      s.."nvim-tree/nvim-web-devicons",
     },
-    event = "VeryLazy", 
+    event = "VeryLazy",
     config = function()
       require'nvim-tree'.setup {
       git = {
@@ -28,7 +29,7 @@ require("lazy").setup({
       }
     end
   },
-  {"neovim/nvim-lspconfig", event = "VeryLazy", config = function() 
+  {s.."neovim/nvim-lspconfig", event = "VeryLazy", config = function()
     local capabilities = require("cmp_nvim_lsp").default_capabilities()
     local servers = { 'clangd'}
     local lspcfg = require("lspconfig")
@@ -52,8 +53,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(ev)
     -- Enable completion triggered by <c-x><c-o>
     vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
-
-    -- Buffer local mappings.
+                                                                                          -- Buffer local mappings.
     -- See `:help vim.lsp.*` for documentation on any of the below functions
     local opts = { buffer = ev.buf }
     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
@@ -70,17 +70,16 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
     vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, opts)
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-    vim.api.nvim_create_autocmd("BufWritePre", {
-        buffer = buffer,
+    vim.api.nvim_create_autocmd("BufWritePre", {                                              buffer = buffer,
         callback = function()
             vim.lsp.buf.format { async = false }
         end
     })
   end,
-}) 
+})
   end},
-  {"nvim-treesitter/nvim-treesitter", build = ":TSUpdate", event = "BufEnter *.*", 
-    config = function() 
+  {s.."nvim-treesitter/nvim-treesitter", build = ":TSUpdate", event = "BufEnter *.*",
+    config = function()
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 --code highlight
 require'nvim-treesitter.configs'.setup {
@@ -117,13 +116,13 @@ vim.wo.foldlevel = 99
 
     end
   },
-  {"hrsh7th/nvim-cmp",
+  {s.."hrsh7th/nvim-cmp",
     dependencies = {
-      "hrsh7th/cmp-nvim-lsp", --neovim 内置 LSP 客户端的 nvim-cmp 源
-      "hrsh7th/cmp-buffer", --从buffer中智能提示
-      "hrsh7th/cmp-path", --自动提示硬盘上的文件
-      "hrsh7th/cmp-cmdline",
-      "onsails/lspkind-nvim", --美化自动完成提示信息
+      s.."hrsh7th/cmp-nvim-lsp", --neovim 内置 LSP 客户端的 nvim-cmp 源
+      s.."hrsh7th/cmp-buffer", --从buffer中智能提示
+      s.."hrsh7th/cmp-path", --自动提示硬盘上的文件
+      s.."hrsh7th/cmp-cmdline",
+      s.."onsails/lspkind-nvim", --美化自动完成提示信息
     },
     event = "VeryLazy",
     config = function()
@@ -215,16 +214,16 @@ cmp.setup({
     end
 },
   -- 代码段提示
-  {"L3MON4D3/LuaSnip",
+  {s.."L3MON4D3/LuaSnip",
     dependencies = {
-      "saadparwaiz1/cmp_luasnip", -- Snippets source for nvim-cmp
-      "rafamadriz/friendly-snippets" --代码段合集
+      s.."saadparwaiz1/cmp_luasnip", -- Snippets source for nvim-cmp
+      s.."rafamadriz/friendly-snippets" --代码段合集
     },
     event = "VeryLazy",
   },
-	
-  {"windwp/nvim-autopairs", event = "InsertEnter",
-    config = function() 
+
+  {s.."windwp/nvim-autopairs", event = "InsertEnter",
+    config = function()
 local npairs_ok, npairs = pcall(require, "nvim-autopairs")
 if not npairs_ok then
   return
@@ -260,12 +259,11 @@ cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done { map_char = { tex = 
 
     end
   },
-  {"nvim-telescope/telescope.nvim", tag = "0.1.1",
-      dependencies = { "nvim-lua/plenary.nvim" },
+  {s.."nvim-telescope/telescope.nvim", tag = "0.1.1",
+      dependencies = { s.."nvim-lua/plenary.nvim" },
       event = "VeryLazy",
       config = function()
-        require('telescope').setup {
-  extensions = {
+        require('telescope').setup {                                                    extensions = {
     fzf = {
       fuzzy = true,                    -- false will only do exact matching
       override_generic_sorter = true,  -- override the generic sorter
@@ -278,7 +276,7 @@ cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done { map_char = { tex = 
 
       end
   },
-  {'glepnir/dashboard-nvim',
+  {s.."glepnir/dashboard-nvim",
     config = function()
       require('dashboard').setup {
         theme = 'hyper',
@@ -301,7 +299,7 @@ cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done { map_char = { tex = 
       }    end,
       event = "VimEnter",
   },
-  {'numToStr/Comment.nvim',event = "BufEnter *.*", config = function()
+  {s.."numToStr/Comment.nvim",event = "BufEnter *.*", config = function()
     require('Comment').setup({
     ---Add a space b/w comment and the line
     padding = true,
@@ -329,7 +327,7 @@ cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done { map_char = { tex = 
 })
 
   end},
-  { "lukas-reineke/indent-blankline.nvim" , event="BufEnter *.*", config = function() 
+  {s.."lukas-reineke/indent-blankline.nvim" , event="BufEnter *.*", config = function()
   vim.opt.termguicolors = true
   vim.cmd [[highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine]]
   vim.cmd [[highlight IndentBlanklineIndent2 guifg=#E5C07B gui=nocombine]]
@@ -337,14 +335,14 @@ cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done { map_char = { tex = 
   vim.cmd [[highlight IndentBlanklineIndent4 guifg=#56B6C2 gui=nocombine]]
   vim.cmd [[highlight IndentBlanklineIndent5 guifg=#61AFEF gui=nocombine]]
   vim.cmd [[highlight IndentBlanklineIndent6 guifg=#C678DD gui=nocombine]]
-	vim.opt.list = true
-	vim.opt.listchars:append "space:⋅"
-	--vim.opt.listchars:append "eol:↴"
+        vim.opt.list = true
+        vim.opt.listchars:append "space:⋅"
+        --vim.opt.listchars:append "eol:↴"
 
-	require("indent_blankline").setup {
-    	space_char_blankline = " ",
-    	show_current_context = true,
-    	show_current_context_start = true,
+        require("indent_blankline").setup {
+        space_char_blankline = " ",
+        show_current_context = true,
+        show_current_context_start = true,
          char_highlight_list = {
         "IndentBlanklineIndent1",
         "IndentBlanklineIndent2",
