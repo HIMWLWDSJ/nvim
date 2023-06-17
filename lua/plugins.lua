@@ -29,7 +29,7 @@ require("lazy").setup({
       }
     end
   },
-  {s.."neovim/nvim-lspconfig", event = "VeryLazy", config = function()
+  {s.."neovim/nvim-lspconfig", config = function()
     local capabilities = require("cmp_nvim_lsp").default_capabilities()
     local servers = { 'clangd'}
     local lspcfg = require("lspconfig")
